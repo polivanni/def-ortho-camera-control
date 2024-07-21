@@ -1,5 +1,6 @@
 [project]
 title = OrthoCameraControl
+developer = pollivanni
 dependencies#0 = https://github.com/britzl/defold-orthographic/archive/refs/tags/3.3.1.zip
 
 [bootstrap]
@@ -29,4 +30,7 @@ input_method = HiddenInputField
 [physics]
 gravity_y = -1000.0
 scale = 0.01
+
+[library]
+include_dirs = ortho_control
 
