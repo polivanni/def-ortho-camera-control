@@ -1,0 +1,75 @@
+local application_utility = require "ortho_control.application_utility"
+local mobile_zoomer = require "ortho_control.camera.zoomers.mobile_zoomer.mobile_zoomer"
+local null_zoomer = require "ortho_control.camera.zoomers.null_zoomer"
+local desktop_zoomer = require "ortho_control.camera.zoomers.desktop_zoomer.desktop_zoomer"
+
+go.property("camera_id", msg.url("camera"))
+go.property("min_camera_zoom", 0.3)
+go.property("max_camera_zoom", 2)
+go.property("zoom_delta", 0.01)
+
+---@class action_table
+---@field touch hash
+---@field touch_multi hash
+---@field mouse_wheel_up hash
+---@field mouse_wheel_down hash
+local DEFAULT_ACTION_TABLE = {
+	touch = hash("touch"),
+	touch_multi = hash("touch_multi"),
+	mouse_wheel_up = hash("mouse_wheel_up"),
+	mouse_wheel_down = hash("mouse_wheel_down"),
+}
+
+---@class camera_mode_move
+---@field zoomer camera_zoomer
+---@field mode_active boolean
+
+---@param self camera_mode_move
+function on_input(self, action_id, action)
+	self.zoomer:on_input(action_id, action)
+end
+
+---@param self camera_mode_move
+function on_message(self, message_id, message, sender)
+	self.zoomer:on_message(message_id, message, sender)
+
+	if message_id == hash("set_action_table") then
+		---@cast message action_table
+		assert(message, "action_table must be provided")
+		assert(message.touch and message.touch_multi and message.mouse_wheel_down and message.mouse_wheel_up, "message type is wrong")
+		self.zoomer:set_action_table(message)
+	end
+end
+
+---@param self camera_mode_move
+function update(self, dt)
+	self.zoomer:on_update(dt)
+end
+
+---@return camera_zoomer
+local function create_current_zoomer(self)
+	local camera_id = self.camera_id
+	assert(camera_id, "camera id is not provided")
+
+	camera_id = hash(camera_id.path)
+	local zoomer
+	local sys_name = application_utility.get_system_name()
+	if sys_name == application_utility.ANDROID or sys_name == application_utility.IPHONE_OS then
+		zoomer = mobile_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, DEFAULT_ACTION_TABLE)
+	elseif sys_name == application_utility.WINDOWS or sys_name == application_utility.LINUX or sys_name == application_utility.DANWIN then
+		zoomer = desktop_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, DEFAULT_ACTION_TABLE)
+	else
+		zoomer = null_zoomer.create()
+	end
+
+	return zoomer
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.zoomer = create_current_zoomer(self)
+end
+
+function final(self)
+	self.zoomer:final()
+end
