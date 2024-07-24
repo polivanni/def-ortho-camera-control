@@ -5,7 +5,7 @@ local utility = require "ortho_control.utility"
 
 local M = {}
 
----@param self desktop_zoomer
+---@param self ortho_control.desktop_zoomer
 ---@param zoom number
 local function change_zoom(self, zoom)
     zoom = utility.clamp(zoom, self.min_zoom, self.max_zoom)
@@ -17,10 +17,10 @@ end
 ---@param min_zoom float
 ---@param max_zoom float
 ---@param zoom_delta float
----@param action_table action_table
----@return desktop_zoomer
+---@param action_table ortho_control.action_table
+---@return ortho_control.desktop_zoomer
 function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
-    ---@class desktop_zoomer : camera_zoomer
+    ---@class ortho_control.desktop_zoomer : ortho_control.camera_zoomer
     ---@field camera_id url|hash
     ---@field min_zoom float
     ---@field max_zoom float
@@ -31,7 +31,7 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
     ---@field camera_pos vector3
     ---@field is_drag boolean
     ---@field subs number
-    ---@field action_table action_table
+    ---@field action_table ortho_control.action_table
     local zoomer = {
         camera_id = camera_id,
         min_zoom = min_zoom,
@@ -44,7 +44,7 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
 
     render_state.subscribe_on_screen_size_changed(msg.url())
 
-    ---@param self desktop_zoomer
+    ---@param self ortho_control.desktop_zoomer
     function zoomer:on_message(message_id, message, sender)
         if message_id == render_state.EVENT_SCREEN_SIZE_CHANGED then
             self.width_factor = render_state.width_factor
@@ -52,13 +52,13 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
         end
     end
 
-    ---@param self desktop_zoomer
+    ---@param self ortho_control.desktop_zoomer
     function zoomer.final(self)
         render_state.unsubscribe_on_screen_size_changed(msg.url())
         self.subs = nil
     end
 
-    ---@param self desktop_zoomer
+    ---@param self ortho_control.desktop_zoomer
     function zoomer:on_input(action_id, action)
         local action_pos = vmath.vector3(action.x, action.y, 0)
         local action_world_pos = camera.screen_to_world(self.camera_id, action_pos)
@@ -104,7 +104,7 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
 
     function zoomer:on_update(dt) end
 
-    ---@param action_table action_table
+    ---@param action_table ortho_control.action_table
     function zoomer:set_action_table(action_table)
         self.action_table = action_table
     end

@@ -9,18 +9,18 @@ local M = {}
 ---@param min_zoom float
 ---@param max_zoom float
 ---@param zoom_delta float
----@param action_table action_table
----@return mobile_zoomer
+---@param action_table ortho_control.action_table
+---@return ortho_control.mobile_zoomer
 function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
-    ---@class mobile_zoomer : camera_zoomer, state_machine
+    ---@class ortho_control.mobile_zoomer : ortho_control.camera_zoomer, ortho_control.state_machine
     ---@field camera_id url|hash
     ---@field min_zoom float
     ---@field max_zoom float
     ---@field zoom_delta float
     ---@field width_factor float
     ---@field height_factor float
-    ---@field current_state camera_zoomer_state|nil
-    ---@field action_table action_table
+    ---@field current_state ortho_control.camera_zoomer_state|nil
+    ---@field action_table ortho_control.action_table
     local zoomer = {
         camera_id = camera_id,
         min_zoom = min_zoom,
@@ -36,7 +36,7 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
         [consts.ZOOMER_STATE.ZOOM] = state_zoom.create(zoomer, zoomer.action_table, camera_id, min_zoom, max_zoom, zoom_delta),
     }
 
-    ---@param self mobile_zoomer
+    ---@param self ortho_control.mobile_zoomer
     ---@param state string|integer
     ---@param ... unknown
     function zoomer:change_state(state, ...)
@@ -48,12 +48,12 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
         self.current_state:enter(...)
     end
 
-    ---@param self mobile_zoomer
+    ---@param self ortho_control.mobile_zoomer
     function zoomer:on_input(action_id, action)
         self.current_state:on_input(action_id, action)
     end
 
-    ---@param self mobile_zoomer
+    ---@param self ortho_control.mobile_zoomer
     function zoomer:on_update(dt)
         self.current_state:on_update(dt)
     end

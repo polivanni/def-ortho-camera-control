@@ -7,15 +7,15 @@ local M = {}
 
 local IDLE_FRAME_COUNT = 5
 
----@param state_machine state_machine
----@param action_table action_table
+---@param state_machine ortho_control.state_machine
+---@param action_table ortho_control.action_table
 ---@param camera_id url|string|hash
 ---@return camera_zoomer_state_move
 function M.create(state_machine, action_table, camera_id)
-    ---@class camera_zoomer_state_move : camera_zoomer_state
+    ---@class camera_zoomer_state_move : ortho_control.camera_zoomer_state
     ---@field width_factor number
     ---@field height_factor number
-    ---@field state_machine state_machine
+    ---@field state_machine ortho_control.state_machine
     ---@field camera_id url|string|hash
     ---@field pressed_pos vector3
     ---@field camera_pos vector3
@@ -24,7 +24,7 @@ function M.create(state_machine, action_table, camera_id)
     ---@field state_params any[]
     ---@field new_pos vector3
     ---@field subs number
-    ---@field action_table action_table
+    ---@field action_table ortho_control.action_table
     local state = {
         state_machine = state_machine,
         camera_id = camera_id,

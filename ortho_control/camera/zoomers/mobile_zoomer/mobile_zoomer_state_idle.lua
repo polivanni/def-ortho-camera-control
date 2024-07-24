@@ -3,15 +3,15 @@ local consts = require "ortho_control.consts"
 
 local M = {}
 
----@param state_machine state_machine
----@param action_table action_table
+---@param state_machine ortho_control.state_machine
+---@param action_table ortho_control.action_table
 ---@return camera_zoomer_state_idle
 function M.create(state_machine, action_table)
-    ---@class camera_zoomer_state_idle : camera_zoomer_state
-    ---@field state_machine state_machine
+    ---@class camera_zoomer_state_idle : ortho_control.camera_zoomer_state
+    ---@field state_machine ortho_control.state_machine
     ---@field state_to_change integer
     ---@field state_params any[]
-    ---@field action_table action_table
+    ---@field action_table ortho_control.action_table
     local state = {
         state_machine = state_machine,
         action_table = action_table,

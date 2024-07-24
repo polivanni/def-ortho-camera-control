@@ -1,7 +1,7 @@
 local M = {}
 
 function M.create()
-    ---@class null_zoomer : camera_zoomer
+    ---@class ortho_control.null_zoomer : ortho_control.camera_zoomer
     local null_zoomer = {}
     function null_zoomer.handle_zoom() end
 

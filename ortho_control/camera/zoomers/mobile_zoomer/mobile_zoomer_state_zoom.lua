@@ -8,16 +8,16 @@ local SCREEN_ZOOM_FACTOR = 0.000002
 
 local M = {}
 
----@param state_machine state_machine
----@param action_table action_table
+---@param state_machine ortho_control.state_machine
+---@param action_table ortho_control.action_table
 ---@param camera_id url|string|hash
 ---@param min_zoom number
 ---@param max_zoom number
 ---@param zoom_delta number
 ---@return camera_zoomer_state_zoom
 function M.create(state_machine, action_table, camera_id, min_zoom, max_zoom, zoom_delta)
-    ---@class camera_zoomer_state_zoom : camera_zoomer_state
-    ---@field state_machine state_machine
+    ---@class camera_zoomer_state_zoom : ortho_control.camera_zoomer_state
+    ---@field state_machine ortho_control.state_machine
     ---@field camera_id url|string|hash
     ---@field state_to_change integer
     ---@field state_params any[]
