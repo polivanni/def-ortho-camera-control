@@ -1,7 +1,7 @@
 local camera = require "orthographic.camera"
 local consts = require "ortho_control.consts"
 local zoomer_utility = require "ortho_control.camera.zoomers.zoomer_utility"
-local render_state = require "ortho_control.render_state"
+local ortho_control = require "ortho_control.ortho_control"
 
 local M = {}
 
@@ -33,24 +33,24 @@ function M.create(state_machine, action_table, camera_id)
         action_table = action_table,
     }
 
-    render_state.subscribe_on_screen_size_changed(msg.url())
+    ortho_control.subscribe_on_screen_size_changed(msg.url())
 
 
     function state:on_message(message_id, message, sender)
-        if message_id == render_state.EVENT_SCREEN_SIZE_CHANGED then
-            state.width_factor = render_state.width_factor
-            state.height_factor = render_state.height_factor
+        if message_id == ortho_control.EVENT_SCREEN_SIZE_CHANGED then
+            state.width_factor = ortho_control.width_factor
+            state.height_factor = ortho_control.height_factor
         end
     end
 
     function state:final()
-        render_state.unsubscribe_on_screen_size_changed(msg.url())
+        ortho_control.unsubscribe_on_screen_size_changed(msg.url())
         self.subs = nil
     end
 
     function state:enter(action_x, action_y)
-        self.width_factor = render_state.width_factor
-        self.height_factor = render_state.height_factor
+        self.width_factor = ortho_control.width_factor
+        self.height_factor = ortho_control.height_factor
 
         self.pressed_pos = vmath.vector3(action_x, action_y, 0)
         self.camera_pos = go.get_position(self.camera_id)

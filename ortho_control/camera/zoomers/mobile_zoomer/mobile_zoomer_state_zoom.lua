@@ -1,7 +1,7 @@
 local camera = require "orthographic.camera"
 local utility = require "ortho_control.utility"
 local zoomer_utility = require "ortho_control.camera.zoomers.zoomer_utility"
-local camera_state = require "ortho_control.camera.camera_state"
+local camera_state = require "ortho_control.ortho_control"
 local consts = require "ortho_control.consts"
 
 local SCREEN_ZOOM_FACTOR = 0.000002

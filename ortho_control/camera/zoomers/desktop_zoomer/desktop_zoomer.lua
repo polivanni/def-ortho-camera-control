@@ -1,6 +1,5 @@
 local camera = require "orthographic.camera"
-local render_state = require "ortho_control.render_state"
-local camera_state = require "ortho_control.camera.camera_state"
+local ortho_control = require "ortho_control.ortho_control"
 local utility = require "ortho_control.utility"
 
 local M = {}
@@ -10,7 +9,7 @@ local M = {}
 local function change_zoom(self, zoom)
     zoom = utility.clamp(zoom, self.min_zoom, self.max_zoom)
     camera.set_zoom(self.camera_id, zoom)
-    camera_state.set_camera_zoom(zoom)
+    ortho_control.set_camera_zoom(zoom)
 end
 
 ---@param camera_id url|hash
@@ -37,24 +36,24 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
         min_zoom = min_zoom,
         max_zoom = max_zoom,
         zoom_delta = zoom_delta,
-        width_factor = render_state.width_factor,
-        height_factor = render_state.height_factor,
+        width_factor = ortho_control.width_factor,
+        height_factor = ortho_control.height_factor,
         action_table = action_table
     }
 
-    render_state.subscribe_on_screen_size_changed(msg.url())
+    ortho_control.subscribe_on_screen_size_changed(msg.url())
 
     ---@param self ortho_control.desktop_zoomer
     function zoomer:on_message(message_id, message, sender)
-        if message_id == render_state.EVENT_SCREEN_SIZE_CHANGED then
-            self.width_factor = render_state.width_factor
-            self.height_factor = render_state.height_factor
+        if message_id == ortho_control.EVENT_SCREEN_SIZE_CHANGED then
+            self.width_factor = ortho_control.width_factor
+            self.height_factor = ortho_control.height_factor
         end
     end
 
     ---@param self ortho_control.desktop_zoomer
     function zoomer.final(self)
-        render_state.unsubscribe_on_screen_size_changed(msg.url())
+        ortho_control.unsubscribe_on_screen_size_changed(msg.url())
         self.subs = nil
     end
 

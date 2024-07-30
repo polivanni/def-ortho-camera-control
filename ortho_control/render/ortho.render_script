@@ -1,5 +1,5 @@
 local camera = require "orthographic.camera"
-local render_state = require "ortho_control.render_state"
+local ortho_control = require "ortho_control.ortho_control"
 
 camera.ORTHOGRAPHIC_RENDER_SCRIPT_USED = true
 
@@ -19,7 +19,7 @@ function init(self)
 	self.clear_color.z = sys.get_config("render.clear_color_blue", 0)
 	self.clear_color.w = sys.get_config("render.clear_color_alpha", 0)
 
-	render_state.set_screen_aspects(render.get_window_width(), render.get_window_height())
+	ortho_control.set_screen_aspects(render.get_window_width(), render.get_window_height())
 end
 
 function update(self)
@@ -79,6 +79,6 @@ function on_message(self, message_id, message)
 	if message_id == CLEAR_COLOR then
 		self.clear_color = message.color
 	elseif message_id == hash("window_resized") then
-		render_state.set_screen_aspects(render.get_window_width(), render.get_window_height())
+		ortho_control.set_screen_aspects(render.get_window_width(), render.get_window_height())
 	end
 end
