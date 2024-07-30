@@ -1,5 +1,5 @@
 local camera = require "orthographic.camera"
-local consts = require "ortho_control.consts"
+local consts = require "ortho_control.constants"
 local zoomer_utility = require "ortho_control.camera.zoomers.zoomer_utility"
 local ortho_control = require "ortho_control.ortho_control"
 

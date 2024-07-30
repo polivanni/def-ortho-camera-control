@@ -1,7 +1,7 @@
 local state_idle = require "ortho_control.camera.zoomers.mobile_zoomer.mobile_zoomer_state_idle"
 local state_move = require "ortho_control.camera.zoomers.mobile_zoomer.mobile_zoomer_state_move"
 local state_zoom = require "ortho_control.camera.zoomers.mobile_zoomer.mobile_zoomer_state_zoom"
-local consts = require "ortho_control.consts"
+local consts = require "ortho_control.constants"
 
 local M = {}
 

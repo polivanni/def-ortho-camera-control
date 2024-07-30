@@ -1,6 +1,6 @@
 local camera = require "orthographic.camera"
 local ortho_control = require "ortho_control.ortho_control"
-local utility = require "ortho_control.utility"
+local utility = require "ortho_control.utilities"
 
 local M = {}
 

@@ -46,11 +46,13 @@ function M.on_camera_zoom_changed()
 end
 
 function M.subscribe_on_zoom_changed(url)
+    url = url or msg.url()
     M.subs = M.subs or {}
     M.subs[url] = true
 end
 
 function M.unsubscribe_on_zoom_changed(url)
+    url = url or msg.url()
     M.subs = M.subs or {}
     M.sub[url] = nil
 end
@@ -63,11 +65,13 @@ function M.on_screen_size_changed()
 end
 
 function M.subscribe_on_screen_size_changed(url)
+    url = url or msg.url()
     M.subs = M.subs or {}
     M.subs[url] = true
 end
 
 function M.unsubscribe_on_screen_size_changed(url)
+    url = url or msg.url()
     M.subs = M.subs or {}
     M.subs[url] = nil
 end

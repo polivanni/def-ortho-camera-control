@@ -1,5 +1,5 @@
 local zoomer_utility = require "ortho_control.camera.zoomers.zoomer_utility"
-local consts = require "ortho_control.consts"
+local consts = require "ortho_control.constants"
 
 local M = {}
 
