@@ -11,6 +11,12 @@ M.EVENT_SCREEN_SIZE_CHANGED = hash("screen_size_changed_event")
 
 M.camera_zoom = 1
 
+---@type table<hash, table<url, _>>
+M.subs = {
+    [M.EVENT_CAMERA_ZOOM_CHANGED] = {},
+    [M.EVENT_SCREEN_SIZE_CHANGED] = {},
+}
+
 function M.set_camera_zoom(value)
     local prev_value = M.camera_zoom
     M.camera_zoom = value
@@ -39,41 +45,35 @@ function M.get_reference_height()
 end
 
 function M.on_camera_zoom_changed()
-    M.subs = M.subs or {}
-    for url, _ in pairs(M.subs) do
+    for url, _ in pairs(M.subs[M.EVENT_CAMERA_ZOOM_CHANGED]) do
         msg.post(url, M.EVENT_CAMERA_ZOOM_CHANGED, { zoom = M.camera_zoom })
     end
 end
 
 function M.subscribe_on_zoom_changed(url)
     url = url or msg.url()
-    M.subs = M.subs or {}
-    M.subs[url] = true
+    M.subs[M.EVENT_CAMERA_ZOOM_CHANGED][url] = true
 end
 
 function M.unsubscribe_on_zoom_changed(url)
     url = url or msg.url()
-    M.subs = M.subs or {}
-    M.sub[url] = nil
+    M.subs[M.EVENT_CAMERA_ZOOM_CHANGED][url] = nil
 end
 
 function M.on_screen_size_changed()
-    M.subs = M.subs or {}
-    for url, _ in pairs(M.subs) do
+    for url, _ in pairs(M.subs[M.EVENT_SCREEN_SIZE_CHANGED]) do
         msg.post(url, M.EVENT_SCREEN_SIZE_CHANGED)
     end
 end
 
 function M.subscribe_on_screen_size_changed(url)
     url = url or msg.url()
-    M.subs = M.subs or {}
-    M.subs[url] = true
+    M.subs[M.EVENT_SCREEN_SIZE_CHANGED][url] = true
 end
 
 function M.unsubscribe_on_screen_size_changed(url)
     url = url or msg.url()
-    M.subs = M.subs or {}
-    M.subs[url] = nil
+    M.subs[M.EVENT_SCREEN_SIZE_CHANGED][url] = nil
 end
 
 return M
