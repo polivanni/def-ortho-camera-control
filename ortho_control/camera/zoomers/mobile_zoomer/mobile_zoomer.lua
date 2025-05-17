@@ -62,7 +62,7 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table, const
 
     ---@param self ortho_control.mobile_zoomer
     function zoomer:on_message(message_id, message, sender)
-        if message_id == hash ortho_control.SET_MOVEMENT_CONSTRAINTS then
+        if message_id == ortho_control.SET_MOVEMENT_CONSTRAINTS then
             utilities.assert_valid_constraints(message.constraints)
             self.constraints = message.constraints
         end
