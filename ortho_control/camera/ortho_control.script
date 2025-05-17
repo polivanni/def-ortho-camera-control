@@ -13,6 +13,9 @@ go.property("input_touch_multi", hash "touch_multi")
 go.property("input_mouse_wheel_up", hash "mouse_wheel_up")
 go.property("input_mouse_wheel_down", hash "mouse_wheel_down")
 
+go.property("constraints_bottom_left", vmath.vector3(0))
+go.property("constraints_top_right", vmath.vector3(0))
+
 ---@class ortho_control.camera_mode_move
 ---@field zoomer ortho_control.camera_zoomer
 ---@field mode_active boolean
@@ -45,13 +48,21 @@ local function create_current_zoomer(self)
 		mouse_wheel_down = self.input_mouse_wheel_down,
 	}
 
+	---@class ortho_control.constraints
+	---@field botton_left vector3
+	---@field top_right vector3
+	local constraints = {
+		botton_left = self.constraints_bottom_left,
+		top_right = self.constraints_top_right,
+	}
+
 	camera_id = hash(camera_id.path)
 	local zoomer
 	local sys_name = application_utility.get_system_name()
 	if sys_name == application_utility.ANDROID or sys_name == application_utility.IPHONE_OS then
-		zoomer = mobile_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, action_table)
+		zoomer = mobile_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, action_table, constraints)
 	elseif sys_name == application_utility.WINDOWS or sys_name == application_utility.LINUX or sys_name == application_utility.DANWIN then
-		zoomer = desktop_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, action_table)
+		zoomer = desktop_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, action_table, constraints)
 	else
 		zoomer = null_zoomer.create()
 	end

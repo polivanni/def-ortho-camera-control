@@ -6,8 +6,9 @@ M.screen_width = nil
 M.width_factor = nil
 M.height_factor = nil
 
-M.EVENT_CAMERA_ZOOM_CHANGED = hash("camera_zoom_changed")
-M.EVENT_SCREEN_SIZE_CHANGED = hash("screen_size_changed_event")
+M.EVENT_CAMERA_ZOOM_CHANGED = hash "camera_zoom_changed"
+M.EVENT_SCREEN_SIZE_CHANGED = hash "screen_size_changed_event"
+M.SET_MOVEMENT_CONSTRAINTS = hash "set_movement_constraints"
 
 M.camera_zoom = 1
 
