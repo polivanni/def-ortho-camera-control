@@ -1,5 +1,7 @@
 local M = {}
 
+M.ZERO_VECTOR = vmath.vector3(0)
+
 function M.clamp(x, min, max)
     if x < min then return min end
     if x > max then return max end
@@ -14,6 +16,10 @@ function M.distancesq(x1, y1, x2, y2)
 end
 
 function M.restict_camera_position(camera_id, button_left, top_right)
+    if button_left == M.ZERO_VECTOR and top_right == M.ZERO_VECTOR then
+        return
+    end
+
     local camera_pos = go.get_position(camera_id)
     if camera_pos.x < button_left.x then
         camera_pos.x = button_left.x
