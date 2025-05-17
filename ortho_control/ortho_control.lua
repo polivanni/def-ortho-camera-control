@@ -30,8 +30,10 @@ function M.set_screen_aspects(w, h)
     M.screen_height = h
     M.screen_width = w
 
-    M.width_factor = w / M.get_reference_width()
-    M.height_factor = h / M.get_reference_height()
+    local ref_w = M.get_reference_width()
+    local ref_h = M.get_reference_height()
+    M.width_factor = w / ref_w
+    M.height_factor = h / ref_h
 
     M.on_screen_size_changed()
 end
