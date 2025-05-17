@@ -8,17 +8,10 @@ go.property("min_camera_zoom", 0.3)
 go.property("max_camera_zoom", 2)
 go.property("zoom_delta", 0.01)
 
----@class ortho_control.action_table
----@field touch hash
----@field touch_multi hash
----@field mouse_wheel_up hash
----@field mouse_wheel_down hash
-local DEFAULT_ACTION_TABLE = {
-	touch = hash("touch"),
-	touch_multi = hash("touch_multi"),
-	mouse_wheel_up = hash("mouse_wheel_up"),
-	mouse_wheel_down = hash("mouse_wheel_down"),
-}
+go.property("input_touch", hash "touch")
+go.property("input_touch_multi", hash "touch_multi")
+go.property("input_mouse_wheel_up", hash "mouse_wheel_up")
+go.property("input_mouse_wheel_down", hash "mouse_wheel_down")
 
 ---@class ortho_control.camera_mode_move
 ---@field zoomer ortho_control.camera_zoomer
@@ -32,13 +25,6 @@ end
 ---@param self ortho_control.camera_mode_move
 function on_message(self, message_id, message, sender)
 	self.zoomer:on_message(message_id, message, sender)
-
-	if message_id == hash("set_action_table") then
-		---@cast message ortho_control.action_table
-		assert(message, "action_table must be provided")
-		assert(message.touch and message.touch_multi and message.mouse_wheel_down and message.mouse_wheel_up, "message type is wrong")
-		self.zoomer:set_action_table(message)
-	end
 end
 
 ---@param self ortho_control.camera_mode_move
@@ -51,13 +37,20 @@ local function create_current_zoomer(self)
 	local camera_id = self.camera_id
 	assert(camera_id, "camera id is not provided")
 
+	local action_table = {
+		touch = self.input_touch,
+		touch_multi = self.input_touch_multi,
+		mouse_wheel_up = self.input_mouse_wheel_up,
+		mouse_wheel_down = self.input_mouse_wheel_down,
+	}
+
 	camera_id = hash(camera_id.path)
 	local zoomer
 	local sys_name = application_utility.get_system_name()
 	if sys_name == application_utility.ANDROID or sys_name == application_utility.IPHONE_OS then
-		zoomer = mobile_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, DEFAULT_ACTION_TABLE)
+		zoomer = mobile_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, action_table)
 	elseif sys_name == application_utility.WINDOWS or sys_name == application_utility.LINUX or sys_name == application_utility.DANWIN then
-		zoomer = desktop_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, DEFAULT_ACTION_TABLE)
+		zoomer = desktop_zoomer.create(camera_id, self.min_camera_zoom, self.max_camera_zoom, self.zoom_delta, action_table)
 	else
 		zoomer = null_zoomer.create()
 	end
