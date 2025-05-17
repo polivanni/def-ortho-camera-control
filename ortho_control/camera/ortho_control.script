@@ -37,6 +37,7 @@ local function create_current_zoomer(self)
 	local camera_id = self.camera_id
 	assert(camera_id, "camera id is not provided")
 
+	---@class ortho_control.action_table
 	local action_table = {
 		touch = self.input_touch,
 		touch_multi = self.input_touch_multi,

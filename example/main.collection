@@ -2,29 +2,23 @@ name: "main"
 instances {
   id: "camera"
   prototype: "/orthographic/camera.go"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
   component_properties {
     id: "script"
+    properties {
+      id: "near_z"
+      value: "-100000.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "far_z"
+      value: "100000.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
     properties {
       id: "projection"
       value: "FIXED_ZOOM"
       type: PROPERTY_TYPE_HASH
     }
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
   }
 }
 scale_along_z: 0
@@ -33,82 +27,36 @@ embedded_instances {
   data: "components {\n"
   "  id: \"main\"\n"
   "  component: \"/example/main.script\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
-  "  property_decls {\n"
-  "  }\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"logo\"\n"
   "  type: \"sprite\"\n"
   "  data: \"default_animation: \\\"logo\\\"\\n"
   "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "blend_mode: BLEND_MODE_ALPHA\\n"
   "textures {\\n"
   "  sampler: \\\"texture_sampler\\\"\\n"
   "  texture: \\\"/example/main.atlas\\\"\\n"
   "}\\n"
   "\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"background\"\n"
   "  type: \"sprite\"\n"
   "  data: \"default_animation: \\\"background\\\"\\n"
   "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "blend_mode: BLEND_MODE_ALPHA\\n"
   "textures {\\n"
   "  sampler: \\\"texture_sampler\\\"\\n"
   "  texture: \\\"/example/main.atlas\\\"\\n"
   "}\\n"
   "\"\n"
   "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
   "    z: -0.5\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
   "  }\n"
   "}\n"
   ""
   position {
     x: 640.0
     y: 360.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
   }
 }
 embedded_instances {
@@ -116,40 +64,16 @@ embedded_instances {
   data: "components {\n"
   "  id: \"ortho_control\"\n"
   "  component: \"/ortho_control/camera/ortho_control.script\"\n"
-  "  position {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "  }\n"
-  "  rotation {\n"
-  "    x: 0.0\n"
-  "    y: 0.0\n"
-  "    z: 0.0\n"
-  "    w: 1.0\n"
-  "  }\n"
   "  properties {\n"
   "    id: \"zoom_delta\"\n"
   "    value: \"0.1\"\n"
   "    type: PROPERTY_TYPE_NUMBER\n"
   "  }\n"
-  "  property_decls {\n"
+  "  properties {\n"
+  "    id: \"input_touch\"\n"
+  "    value: \"mouse_button_3\"\n"
+  "    type: PROPERTY_TYPE_HASH\n"
   "  }\n"
   "}\n"
   ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
 }

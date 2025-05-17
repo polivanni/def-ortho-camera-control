@@ -2,6 +2,7 @@
 title = OrthoCameraControl
 developer = pollivanni
 dependencies#0 = https://github.com/britzl/defold-orthographic/archive/refs/tags/3.3.1.zip
+dependencies#1 = https://github.com/subsoap/defos/archive/master.zip
 
 [bootstrap]
 main_collection = /example/main.collectionc
@@ -12,8 +13,9 @@ game_binding = /builtins/input/all.input_bindingc
 use_accelerometer = 0
 
 [display]
-width = 1280
-height = 720
+width = 1920
+height = 1080
+vsync = 0
 
 [script]
 shared_state = 1
@@ -33,4 +35,10 @@ scale = 0.01
 
 [library]
 include_dirs = ortho_control
+
+[defos]
+view_width = 640
+view_height = 480
+view_x = 20
+view_y = 40
 
