@@ -15,9 +15,6 @@ go.property("input_touch_multi", hash "touch_multi")
 go.property("input_mouse_wheel_up", hash "mouse_wheel_up")
 go.property("input_mouse_wheel_down", hash "mouse_wheel_down")
 
-go.property("constraints_bottom_left", vmath.vector3(0))
-go.property("constraints_top_right", vmath.vector3(0))
-
 ---@class ortho_control.camera_mode_move
 ---@field zoomer ortho_control.camera_zoomer
 ---@field mode_active boolean
