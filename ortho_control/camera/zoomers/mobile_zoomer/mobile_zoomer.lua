@@ -52,7 +52,9 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
 
     ---@param self ortho_control.mobile_zoomer
     function zoomer:on_input(action_id, action)
-        self.current_state:on_input(action_id, action)
+        if action and action.x and action.y then
+            self.current_state:on_input(action_id, action)
+        end
     end
 
     ---@param self ortho_control.mobile_zoomer

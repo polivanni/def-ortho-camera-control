@@ -21,7 +21,9 @@ go.property("input_mouse_wheel_down", hash "mouse_wheel_down")
 
 ---@param self ortho_control.camera_mode_move
 function on_input(self, action_id, action)
-	self.zoomer:on_input(action_id, action)
+	if action and action.x and action.y then
+		self.zoomer:on_input(action_id, action)
+	end
 end
 
 ---@param self ortho_control.camera_mode_move
