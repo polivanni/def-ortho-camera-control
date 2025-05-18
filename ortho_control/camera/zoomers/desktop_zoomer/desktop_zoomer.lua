@@ -13,16 +13,13 @@ local function change_zoom(self, zoom)
     ortho_control.set_camera_zoom(zoom)
 end
 
-
-
 ---@param camera_id url|hash
 ---@param min_zoom float
 ---@param max_zoom float
 ---@param zoom_delta float
 ---@param action_table ortho_control.action_table
----@param constraints ortho_control.constraints
 ---@return ortho_control.desktop_zoomer
-function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table, constraints)
+function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
     ---@class ortho_control.desktop_zoomer : ortho_control.camera_zoomer
     ---@field camera_id url|hash
     ---@field min_zoom float
@@ -43,7 +40,6 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table, const
         width_factor = ortho_control.width_factor,
         height_factor = ortho_control.height_factor,
         action_table = action_table,
-        constraints = constraints,
     }
 
     ortho_control.subscribe_on_screen_size_changed(msg.url())
@@ -53,9 +49,6 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table, const
         if message_id == ortho_control.EVENT_SCREEN_SIZE_CHANGED then
             self.width_factor = ortho_control.width_factor
             self.height_factor = ortho_control.height_factor
-        elseif message_id == ortho_control.SET_MOVEMENT_CONSTRAINTS then
-            utilities.assert_valid_constraints(message.constraints)
-            self.constraints = message.constraints
         end
     end
 
@@ -106,9 +99,6 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table, const
             diff = diff / zoom
             camera_pos = camera_pos + diff
             go.set_position(camera_pos, camera_id)
-        end
-        if self.constraints then
-            utilities.restict_camera_position(camera_id, self.constraints.botton_left, self.constraints.top_right)
         end
     end
 

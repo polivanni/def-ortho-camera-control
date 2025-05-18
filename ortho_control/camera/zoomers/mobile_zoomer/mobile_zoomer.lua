@@ -12,9 +12,8 @@ local M = {}
 ---@param max_zoom float
 ---@param zoom_delta float
 ---@param action_table ortho_control.action_table
----@param constraints ortho_control.constraints
 ---@return ortho_control.mobile_zoomer
-function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table, constraints)
+function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
     ---@class ortho_control.mobile_zoomer : ortho_control.camera_zoomer, ortho_control.state_machine
     ---@field camera_id url|hash
     ---@field min_zoom float
@@ -31,7 +30,6 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table, const
         zoom_delta = zoom_delta,
         current_state = nil,
         action_table = action_table,
-        constraints = constraints,
     }
 
     zoomer.states = {
@@ -55,17 +53,10 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table, const
     ---@param self ortho_control.mobile_zoomer
     function zoomer:on_input(action_id, action)
         self.current_state:on_input(action_id, action)
-        if self.constraints then
-            utilities.restict_camera_position(camera_id, self.constraints.botton_left, self.constraints.top_right)
-        end
     end
 
     ---@param self ortho_control.mobile_zoomer
     function zoomer:on_message(message_id, message, sender)
-        if message_id == ortho_control.SET_MOVEMENT_CONSTRAINTS then
-            utilities.assert_valid_constraints(message.constraints)
-            self.constraints = message.constraints
-        end
     end
 
     ---@param self ortho_control.mobile_zoomer

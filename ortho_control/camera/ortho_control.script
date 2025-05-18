@@ -2,6 +2,8 @@ local application_utility = require "ortho_control.application_utility"
 local mobile_zoomer = require "ortho_control.camera.zoomers.mobile_zoomer.mobile_zoomer"
 local null_zoomer = require "ortho_control.camera.zoomers.null_zoomer"
 local desktop_zoomer = require "ortho_control.camera.zoomers.desktop_zoomer.desktop_zoomer"
+local camera = require "orthographic.camera"
+
 
 go.property("camera_id", msg.url("camera"))
 go.property("min_camera_zoom", 0.3)
@@ -46,14 +48,6 @@ local function create_current_zoomer(self)
 		touch_multi = self.input_touch_multi,
 		mouse_wheel_up = self.input_mouse_wheel_up,
 		mouse_wheel_down = self.input_mouse_wheel_down,
-	}
-
-	---@class ortho_control.constraints
-	---@field botton_left vector3
-	---@field top_right vector3
-	local constraints = {
-		botton_left = self.constraints_bottom_left,
-		top_right = self.constraints_top_right,
 	}
 
 	camera_id = hash(camera_id.path)
