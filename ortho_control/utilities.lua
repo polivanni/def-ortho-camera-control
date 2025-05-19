@@ -15,4 +15,14 @@ function M.distancesq(x1, y1, x2, y2)
     return distance
 end
 
+---@param url url
+---@return hash
+function M.url_to_hash(url)
+    local s = url.socket or ""
+    local p = url.path or ""
+    local f = url.fragment or ""
+    local hashed = hash(s .. p .. f)
+    return hashed
+end
+
 return M

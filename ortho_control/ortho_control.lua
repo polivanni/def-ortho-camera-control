@@ -1,3 +1,4 @@
+local utilities = require "ortho_control.utilities"
 local M = {}
 
 M.screen_height = nil
@@ -71,12 +72,14 @@ end
 
 function M.subscribe_on_screen_size_changed(url)
     url = url or msg.url()
-    M.subs[M.EVENT_SCREEN_SIZE_CHANGED][url] = true
+    local h = utilities.url_to_hash(url)
+    M.subs[M.EVENT_SCREEN_SIZE_CHANGED][h] = true
 end
 
 function M.unsubscribe_on_screen_size_changed(url)
     url = url or msg.url()
-    M.subs[M.EVENT_SCREEN_SIZE_CHANGED][url] = nil
+    local h = utilities.url_to_hash(url)
+    M.subs[M.EVENT_SCREEN_SIZE_CHANGED][h] = nil
 end
 
 return M
