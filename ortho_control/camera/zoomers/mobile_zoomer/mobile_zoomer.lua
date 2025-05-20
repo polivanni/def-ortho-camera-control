@@ -2,7 +2,6 @@ local state_idle = require "ortho_control.camera.zoomers.mobile_zoomer.mobile_zo
 local state_move = require "ortho_control.camera.zoomers.mobile_zoomer.mobile_zoomer_state_move"
 local state_zoom = require "ortho_control.camera.zoomers.mobile_zoomer.mobile_zoomer_state_zoom"
 local consts = require "ortho_control.constants"
-local utilities = require "ortho_control.utilities"
 local ortho_control = require "ortho_control.ortho_control"
 
 local M = {}
@@ -57,6 +56,22 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
 
     ---@param self ortho_control.mobile_zoomer
     function zoomer:on_message(message_id, message, sender)
+        if message_id == ortho_control.SET_ACTION then
+            for key, state in pairs(self.states) do
+                if message.touch then
+                    state.action_table.touch = message.touch
+                end
+                if message.touch_multi then
+                    state.action_table.touch_multi = message.touch_multi
+                end
+                if message.mouse_wheel_down then
+                    state.action_table.mouse_wheel_down = message.mouse_wheel_down
+                end
+                if message.mouse_wheel_up then
+                    state.action_table.mouse_wheel_up = message.mouse_wheel_up
+                end
+            end
+        end
     end
 
     ---@param self ortho_control.mobile_zoomer

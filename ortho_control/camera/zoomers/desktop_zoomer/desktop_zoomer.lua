@@ -49,6 +49,19 @@ function M.create(camera_id, min_zoom, max_zoom, zoom_delta, action_table)
         if message_id == ortho_control.EVENT_SCREEN_SIZE_CHANGED then
             self.width_factor = ortho_control.width_factor
             self.height_factor = ortho_control.height_factor
+        elseif message_id == ortho_control.SET_ACTION then
+            if message.touch then
+                self.action_table.touch = message.touch
+            end
+            if message.touch_multi then
+                self.action_table.touch_multi = message.touch_multi
+            end
+            if message.mouse_wheel_down then
+                self.action_table.mouse_wheel_down = message.mouse_wheel_down
+            end
+            if message.mouse_wheel_up then
+                self.action_table.mouse_wheel_up = message.mouse_wheel_up
+            end
         end
     end
 
