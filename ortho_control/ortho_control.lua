@@ -49,23 +49,25 @@ function M.get_reference_height()
 end
 
 function M.on_camera_zoom_changed()
-    for url, _ in pairs(M.subs[M.EVENT_CAMERA_ZOOM_CHANGED]) do
+    for _, url in pairs(M.subs[M.EVENT_CAMERA_ZOOM_CHANGED]) do
         msg.post(url, M.EVENT_CAMERA_ZOOM_CHANGED, { zoom = M.camera_zoom })
     end
 end
 
 function M.subscribe_on_zoom_changed(url)
     url = url or msg.url()
-    M.subs[M.EVENT_CAMERA_ZOOM_CHANGED][url] = true
+    local h = utilities.url_to_hash(url)
+    M.subs[M.EVENT_CAMERA_ZOOM_CHANGED][h] = url
 end
 
 function M.unsubscribe_on_zoom_changed(url)
     url = url or msg.url()
-    M.subs[M.EVENT_CAMERA_ZOOM_CHANGED][url] = nil
+    local h = utilities.url_to_hash(url)
+    M.subs[M.EVENT_CAMERA_ZOOM_CHANGED][h] = nil
 end
 
 function M.on_screen_size_changed()
-    for url, _ in pairs(M.subs[M.EVENT_SCREEN_SIZE_CHANGED]) do
+    for _, url in pairs(M.subs[M.EVENT_SCREEN_SIZE_CHANGED]) do
         msg.post(url, M.EVENT_SCREEN_SIZE_CHANGED)
     end
 end
@@ -73,7 +75,7 @@ end
 function M.subscribe_on_screen_size_changed(url)
     url = url or msg.url()
     local h = utilities.url_to_hash(url)
-    M.subs[M.EVENT_SCREEN_SIZE_CHANGED][h] = true
+    M.subs[M.EVENT_SCREEN_SIZE_CHANGED][h] = url
 end
 
 function M.unsubscribe_on_screen_size_changed(url)

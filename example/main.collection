@@ -21,22 +21,22 @@ instances {
     }
     properties {
       id: "bounds_left"
-      value: "-1000.0"
+      value: "-3000.0"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
       id: "bounds_bottom"
-      value: "-1000.0"
+      value: "-3000.0"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
       id: "bounds_right"
-      value: "1000.0"
+      value: "3000.0"
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
       id: "bounds_top"
-      value: "1000.0"
+      value: "3000.0"
       type: PROPERTY_TYPE_NUMBER
     }
   }
